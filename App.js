@@ -8,6 +8,9 @@ import { useEffect, useState } from "react";
 import Login from "./screen/Login";
 import AdminHome from "./screen/AdminHome";
 import AddShoeForm from "./components/AddShoeForm";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
+import CartPage from "./screen/CartPage";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -30,7 +33,7 @@ export default function App() {
 
   if (!isOnboarded) {
     return (
-      <>
+      <Provider store={store}>
         <StatusBar
           barStyle="light-content"
           hidden={false}
@@ -48,13 +51,14 @@ export default function App() {
             <Stack.Screen name="Onboard" component={Onboard} />
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="AddShoeForm" component={AddShoeForm} />
+            <Stack.Screen name="CartPage" component={CartPage} />
           </Stack.Navigator>
         </NavigationContainer>
-      </>
+      </Provider>
     );
   }
   return (
-    <>
+    <Provider store={store}>
       <StatusBar
         barStyle="light-content"
         hidden={false}
@@ -72,9 +76,10 @@ export default function App() {
           <Stack.Screen name="Onboard" component={Onboard} />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="AddShoeForm" component={AddShoeForm} />
+          <Stack.Screen name="CartPage" component={CartPage} />
         </Stack.Navigator>
       </NavigationContainer>
-    </>
+    </Provider>
   );
 }
 

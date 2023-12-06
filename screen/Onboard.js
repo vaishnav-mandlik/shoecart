@@ -9,7 +9,7 @@ const Onboard = () => {
   const navigation = useNavigation();
   const onDone = async () => {
     await AsyncStorage.setItem("onboard", "true");
-    navigation.navigate("UserLogin");
+    navigation.navigate("Login");
   };
 
   return (
