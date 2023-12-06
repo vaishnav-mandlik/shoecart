@@ -4,7 +4,7 @@ import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import Skeleton from "./Skeleton";
+import { AdminSkeleton } from "./Skeleton";
 
 const ShowShoes = () => {
   const [shoes, setShoes] = useState([]);
@@ -37,16 +37,27 @@ const ShowShoes = () => {
   if (loading) {
     return (
       <View className="flex-1 ">
-        <Skeleton />
+        <AdminSkeleton />
       </View>
     );
   }
+  const AddButton = () => (
+    <TouchableOpacity
+      className="absolute bottom-6 right-6"
+      onPress={() =>
+        navigation.navigate("AddShoeForm", { onAddShoe: refreshShoes })
+      }
+    >
+      <AntDesign name="pluscircle" size={50} color="black" />
+    </TouchableOpacity>
+  );
 
   if (shoes.length === 0) {
     return (
       <View className="flex-1 justify-center items-center">
         <Text>404 No shoes found</Text>
         <Text> Click on the + icon to add a shoe</Text>
+        <AddButton />
       </View>
     );
   }
@@ -95,14 +106,7 @@ const ShowShoes = () => {
         )}
         keyExtractor={(item) => item.id}
       />
-      <TouchableOpacity
-        className="absolute bottom-6 right-6"
-        onPress={() =>
-          navigation.navigate("AddShoeForm", { onAddShoe: refreshShoes })
-        }
-      >
-        <AntDesign name="pluscircle" size={50} color="black" />
-      </TouchableOpacity>
+      <AddButton />
     </View>
   );
 };
